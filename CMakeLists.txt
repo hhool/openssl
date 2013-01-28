@@ -18,12 +18,12 @@ set(openssl-include
     crypto/store
 )
 
-if(APPLE)
+if(UNIX)
     set(openssl-include
         ${openssl-include}
         MacOS
     )
-endif(APPLE)
+endif(UNIX)
 
 ## ssl-src
 set(ssl-src
