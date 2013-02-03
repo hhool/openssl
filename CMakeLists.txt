@@ -8,6 +8,7 @@ project(openssl)
 
 ## openssl-include
 set(openssl-include
+    .
     openssl
     openssl/include
     openssl/crypto
@@ -17,13 +18,6 @@ set(openssl-include
     openssl/crypto/modes
     openssl/crypto/store
 )
-
-if(UNIX)
-    set(openssl-include
-        ${openssl-include}
-        openssl/MacOS
-    )
-endif(UNIX)
 
 ## ssl-src
 set(ssl-src
@@ -692,6 +686,14 @@ set(openssl-cflags
     -D_REENTRANT
     -DOPENSSL_NO_ASM
 )
+
+if(NOT UNIX)
+    set(openssl-cflags
+        ${openssl-cflags}
+        -DMK1MF_BUILD
+        -DWIN32_LEAN_AND_MEAN
+    )
+endif(NOT UNIX)
 
 string(REPLACE ";" " " openssl-cflags "${openssl-cflags}")
 
