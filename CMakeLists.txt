@@ -4,6 +4,14 @@ cmake_minimum_required(VERSION 2.8)
 
 project(openssl)
 
+# options ----------------------------------------------------------------------
+
+option(OPENSSL_BUILD_LIBSSL    "Build libssl"    ON)
+option(OPENSSL_BUILD_LIBCRYPTO "Build libcrypto" ON)
+
+message(STATUS "OPENSSL_BUILD_LIBSSL=${OPENSSL_BUILD_LIBSSL}")
+message(STATUS "OPENSSL_BUILD_LIBCRYPTO=${OPENSSL_BUILD_LIBCRYPTO}")
+
 # variables --------------------------------------------------------------------
 
 ## openssl-include
@@ -704,20 +712,24 @@ include_directories(
 )
 
 ## ssl
-add_library(ssl STATIC
-    ${ssl-src}
-)
+if(OPENSSL_BUILD_LIBSSL)
+    add_library(ssl STATIC
+        ${ssl-src}
+    )
 
-set_target_properties(ssl PROPERTIES
-    COMPILE_FLAGS "${openssl-cflags}"
-)
+    set_target_properties(ssl PROPERTIES
+        COMPILE_FLAGS "${openssl-cflags}"
+    )
+endif(OPENSSL_BUILD_LIBSSL)
 
 ## crypto
-add_library(crypto STATIC
-    ${crypto-src}
-    ${crypto-noasm-src}
-)
+if(OPENSSL_BUILD_LIBCRYPTO)
+    add_library(crypto STATIC
+        ${crypto-src}
+        ${crypto-noasm-src}
+    )
 
-set_target_properties(crypto PROPERTIES
-    COMPILE_FLAGS "${openssl-cflags}"
-)
+    set_target_properties(crypto PROPERTIES
+        COMPILE_FLAGS "${openssl-cflags}"
+    )
+endif(OPENSSL_BUILD_LIBCRYPTO)
