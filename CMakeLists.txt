@@ -6,7 +6,7 @@ project(openssl)
 
 # options ----------------------------------------------------------------------
 
-option(OPENSSL_BUILD_LIBSSL    "Build libssl"    ON)
+option(OPENSSL_BUILD_LIBSSL    "Build libssl"    OFF)
 option(OPENSSL_BUILD_LIBCRYPTO "Build libcrypto" ON)
 
 message(STATUS "OPENSSL_BUILD_LIBSSL=${OPENSSL_BUILD_LIBSSL}")
